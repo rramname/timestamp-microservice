@@ -9,8 +9,20 @@ express()
   .get('/', (req, res) => res.render('pages/index'))
   .get('/api/timestamp/:timestamp', (req, res) => 
     {
-      
+      console.log("with ts")
       var inp=new Date(req.params.timestamp);
+      var output={};
+      if(inp == "Invalid Date")
+        output={error:"Invalid Date"};
+      else      
+      var output={unix:inp.getTime(),utc:inp.toUTCString()}
+      res.send(JSON.stringify(output))
+    }
+  )
+  .get('/api/timestamp/', (req, res) => 
+    {
+      console.log("no timestamp")
+      var inp=new Date();
       var output={};
       if(inp == "Invalid Date")
         output={error:"Invalid Date"};
