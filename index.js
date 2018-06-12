@@ -7,4 +7,16 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/api/timestamp/:timestamp', (req, res) => 
+    {
+      
+      var inp=new Date(req.params.timestamp);
+      var output={};
+      if(inp == "Invalid Date")
+        output={error:"Invalid Date"};
+      else      
+      var output={unix:inp.getTime(),utc:inp.toUTCString()}
+      res.send(JSON.stringify(output))
+    }
+  )
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
